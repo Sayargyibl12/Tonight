@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>For Thwe Thwe ✨</title>
+
+  <style>
+    /* Global */
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; margin:0; }
+    body{ overflow:hidden; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial; }
+
+    /* Pages */
+    #hoverPage, #newYearPage{
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #newYearPage{ display:none; overflow-x:hidden; }
+
+    /* =========================================================
+       HOVER PAGE — SCOPED (from hover.html)
+    ========================================================= */
+    #hoverPage{
+      --bg1:#070513;
+      --bg2:#101a3a;
+      --glass: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.18);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --pink:#ff4fd8;
+      --cyan:#66f0ff;
+      --gold:#ffd166;
+      --shadow: 0 30px 80px rgba(0,0,0,.5);
+
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(900px 700px at 15% 10%, rgba(102,240,255,.18), transparent 55%),
+        radial-gradient(900px 650px at 85% 15%, rgba(255,79,216,.16), transparent 60%),
+        radial-gradient(900px 650px at 50% 90%, rgba(255,209,102,.14), transparent 60%),
+        linear-gradient(120deg, var(--bg1), var(--bg2));
+      overflow:hidden;
+    }
+
+    #hoverPage .wash{
+      position:fixed; inset:-25%;
+      background: conic-gradient(from 180deg,
+        rgba(255,79,216,.14),
+        rgba(102,240,255,.14),
+        rgba(255,209,102,.10),
+        rgba(255,79,216,.14)
+      );
+      filter: blur(70px);
+      animation: hoverSpin 18s linear infinite;
+      opacity:.75;
+      pointer-events:none;
+      z-index:0;
+    }
+    @keyframes hoverSpin{ to{ transform:rotate(360deg) } }
+
+    #hoverPage .sparks{
+      position:fixed; inset:0;
+      pointer-events:none;
+      z-index:0;
+      opacity:.9;
+    }
+    #hoverPage .spark{
+      position:absolute;
+      width:6px; height:6px;
+      border-radius:50%;
+      background: radial-gradient(circle, rgba(255,255,255,.9), rgba(255,255,255,0) 60%);
+      filter: drop-shadow(0 0 12px rgba(102,240,255,.35));
+      animation: hoverFloatUp linear infinite;
+      opacity:.55;
+    }
+    @keyframes hoverFloatUp{
+      from{ transform: translateY(110vh) scale(.8); opacity:.0;}
+      10%{opacity:.55}
+      to{ transform: translateY(-20vh) scale(1.25); opacity:0}
+    }
+
+    #hoverPage .card{
+      position:relative;
+      width:min(820px, 92vw);
+      height: min(420px, 72vh);
+      border-radius: 26px;
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      box-shadow: var(--shadow);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      overflow:hidden;
+      z-index:2;
+      transform-style: preserve-3d;
+      transition: transform .25s ease;
+      display:flex;
+      align-items:stretch;
+    }
+
+    #hoverPage .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(700px 260px at 15% 10%, rgba(102,240,255,.18), transparent 60%),
+        radial-gradient(700px 260px at 85% 20%, rgba(255,79,216,.16), transparent 60%);
+      pointer-events:none;
+      opacity:.95;
+      z-index:0;
+    }
+    #hoverPage .card::after{
+      content:"";
+      position:absolute; inset:-40%;
+      background: linear-gradient(120deg,
+        transparent 0%,
+        rgba(255,255,255,.10) 35%,
+        transparent 60%
+      );
+      transform: translateX(-60%) rotate(8deg);
+      transition: transform .7s ease;
+      pointer-events:none;
+      z-index:1;
+      mix-blend-mode: overlay;
+    }
+    #hoverPage .card:hover::after{
+      transform: translateX(30%) rotate(8deg);
+    }
+
+    #hoverPage .blob{
+      position:absolute;
+      inset:-30%;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,79,216,.95), rgba(255,79,216,.0) 55%),
+        radial-gradient(circle at 70% 65%, rgba(102,240,255,.9), rgba(102,240,255,.0) 55%),
+        radial-gradient(circle at 55% 35%, rgba(255,209,102,.7), rgba(255,209,102,.0) 58%);
+      filter: blur(20px);
+      opacity:.85;
+      transform: scale(.45);
+      transform-origin:center;
+      border-radius: 999px;
+      transition: transform .75s cubic-bezier(.2,.9,.15,1), opacity .75s ease;
+      z-index:0;
+      animation: hoverBlobWobble 8s ease-in-out infinite;
+    }
+    #hoverPage .card:hover .blob{
+      transform: scale(1.2);
+      opacity:.65;
+    }
+    @keyframes hoverBlobWobble{
+      0%,100%{transform: scale(.45) translate(0,0)}
+      50%{transform: scale(.52) translate(60px,-30px)}
+    }
+
+    #hoverPage .content{
+      position:relative;
+      z-index:3;
+      width: 52%;
+      padding: clamp(18px, 3vw, 34px);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap: 10px;
+      transform: translateX(18px);
+      opacity: 0;
+      transition: transform .7s cubic-bezier(.18,.9,.2,1), opacity .7s ease;
+    }
+    #hoverPage .card:hover .content{
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    #hoverPage .badge{
+      width:max-content;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.20);
+      border:1px solid rgba(255,255,255,.16);
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+    #hoverPage .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: radial-gradient(circle, var(--cyan), transparent 60%);
+      box-shadow: 0 0 18px rgba(102,240,255,.6);
+      position:relative;
+    }
+    #hoverPage .dot::after{
+      content:"";
+      position:absolute; inset:-4px;
+      border: 1px solid rgba(102,240,255,.35);
+      border-radius: 50%;
+      animation: hoverPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes hoverPulse{
+      0%,100%{transform:scale(1);opacity:.6}
+      50%{transform:scale(1.6);opacity:.12}
+    }
+
+    #hoverPage h2{
+      font-size: clamp(36px, 4vw, 62px);
+      line-height: 1;
+      letter-spacing: -.02em;
+      text-shadow: 0 0 30px rgba(255,79,216,.2), 0 0 30px rgba(102,240,255,.14);
+      color: rgba(255,255,255,.92);
+      margin:0;
+    }
+    #hoverPage h3{
+      color: rgba(255,255,255,.82);
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      font-weight: 650;
+      font-size: 13px;
+      margin:0;
+    }
+    #hoverPage p{
+      color: rgba(255,255,255,.76);
+      line-height: 1.7;
+      font-size: 14.5px;
+      max-width: 56ch;
+      margin-top: 6px;
+    }
+
+    #hoverPage .btn{
+      margin-top: 14px;
+      width:max-content;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 11px 16px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      text-decoration:none;
+      font-weight: 700;
+      letter-spacing:.01em;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      -webkit-user-select:none;
+      user-select:none;
+      position:relative;
+      overflow:hidden;
+    }
+    #hoverPage .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.32);
+    }
+    #hoverPage .btn:active{transform: translateY(0) scale(.98)}
+    #hoverPage .btn .arrow{transition: transform .25s ease}
+    #hoverPage .btn:hover .arrow{transform: translateX(3px)}
+
+    #hoverPage .btn::after{
+      content:"";
+      position:absolute; inset:-60%;
+      background: linear-gradient(120deg,
+        transparent 0%,
+        rgba(255,255,255,.18) 35%,
+        transparent 55%
+      );
+      transform: translateX(-55%) rotate(10deg);
+      transition: transform .6s ease;
+      mix-blend-mode: overlay;
+      pointer-events:none;
+    }
+    #hoverPage .btn:hover::after{transform: translateX(40%) rotate(10deg)}
+
+    #hoverPage .imagePane{
+      position:relative;
+      width:48%;
+      z-index:2;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    #hoverPage .imageFrame{
+      width: 86%;
+      height: 82%;
+      border-radius: 22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.20);
+      box-shadow: 0 22px 70px rgba(0,0,0,.42);
+      transform: translateX(-10px) scale(.96);
+      opacity: .0;
+      transition: transform .75s cubic-bezier(.18,.9,.2,1), opacity .7s ease;
+      position:relative;
+    }
+    #hoverPage .card:hover .imageFrame{
+      transform: translateX(0) scale(1);
+      opacity: 1;
+    }
+
+    #hoverPage .imageFrame img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transform: scale(1.05);
+      transition: transform 1s ease, filter 1s ease;
+      filter: saturate(1.05) contrast(1.05);
+    }
+    #hoverPage .card:hover .imageFrame img{
+      transform: scale(1.14);
+      filter: saturate(1.18) contrast(1.12);
+    }
+
+    #hoverPage .imageFrame::after{
+      content:"";
+      position:absolute; inset:0;
+      background: radial-gradient(circle at 30% 20%, transparent 35%, rgba(0,0,0,.35) 90%);
+      pointer-events:none;
+    }
+
+    #hoverPage .transition{
+      position:fixed;
+      inset:0;
+      z-index:50;
+      pointer-events:none;
+      opacity:0;
+      transition: opacity .25s ease;
+    }
+    #hoverPage .transition.show{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    #hoverPage .transition .veil{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(900px 600px at 15% 20%, rgba(102,240,255,.25), transparent 55%),
+        radial-gradient(900px 600px at 85% 30%, rgba(255,79,216,.22), transparent 60%),
+        linear-gradient(120deg, rgba(7,5,19,.92), rgba(16,26,58,.92));
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+
+    #hoverPage .transition .portal{
+      position:absolute;
+      left:50%; top:50%;
+      width: 22px; height: 22px;
+      transform: translate(-50%,-50%);
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255,255,255,.9), rgba(255,255,255,0) 60%);
+      box-shadow:
+        0 0 60px rgba(102,240,255,.55),
+        0 0 80px rgba(255,79,216,.35);
+      animation: none;
+    }
+
+    #hoverPage .transition.show .portal{
+      animation: hoverPortalExpand 700ms cubic-bezier(.18,.9,.2,1) forwards;
+    }
+
+    @keyframes hoverPortalExpand{
+      0%{ transform: translate(-50%,-50%) scale(1); opacity:1 }
+      70%{ transform: translate(-50%,-50%) scale(40); opacity:1 }
+      100%{ transform: translate(-50%,-50%) scale(75); opacity:1 }
+    }
+
+    #hoverPage .tSpark{
+      position:absolute;
+      width:6px; height:6px;
+      border-radius:50%;
+      background: radial-gradient(circle, rgba(255,255,255,.95), rgba(255,255,255,0) 60%);
+      filter: drop-shadow(0 0 16px rgba(255,209,102,.35));
+      opacity:.9;
+    }
+
+    @media (max-width: 900px){
+      #hoverPage .card{flex-direction:column; height:auto}
+      #hoverPage .content, #hoverPage .imagePane{width:100%}
+      #hoverPage .imagePane{padding-bottom:18px}
+      #hoverPage .content{opacity:1; transform:none}
+      #hoverPage .imageFrame{opacity:1; transform:none; height: 320px}
+      #hoverPage .card:hover .content, #hoverPage .card:hover .imageFrame{transform:none}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      #hoverPage .wash,#hoverPage .spark{animation:none!important}
+      #hoverPage .card,#hoverPage .btn,#hoverPage .content,#hoverPage .imageFrame{transition:none!important}
+    }
+
+    /* =========================================================
+       NEW YEAR PAGE — SCOPED (from index1.html)
+    ========================================================= */
+    #newYearPage{
+      --bg1:#070216;
+      --bg2:#0a2a43;
+      --glass: rgba(255,255,255,.08);
+      --glass2: rgba(255,255,255,.12);
+      --stroke: rgba(255,255,255,.18);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --accent1:#ff4fd8;
+      --accent2:#66f0ff;
+      --accent3:#ffd166;
+      --shadow: 0 25px 70px rgba(0,0,0,.45);
+
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(102,240,255,.18), transparent 55%),
+        radial-gradient(1000px 650px at 85% 15%, rgba(255,79,216,.16), transparent 60%),
+        radial-gradient(900px 600px at 50% 90%, rgba(255,209,102,.14), transparent 55%),
+        linear-gradient(120deg, var(--bg1), var(--bg2));
+    }
+
+    #newYearPage .wash{
+      position:fixed; inset:-20%;
+      background: conic-gradient(from 180deg,
+        rgba(255,79,216,.12),
+        rgba(102,240,255,.12),
+        rgba(255,209,102,.10),
+        rgba(255,79,216,.12)
+      );
+      filter: blur(60px);
+      animation: nySpin 18s linear infinite;
+      opacity:.7;
+      pointer-events:none;
+      z-index:0;
+    }
+    @keyframes nySpin{to{transform:rotate(360deg)}}
+
+    #newYearPage #fx{
+      position:fixed; inset:0;
+      z-index:1;
+      pointer-events:none;
+    }
+
+    #newYearPage .page{
+      position:relative;
+      z-index:2;
+      min-height:100%;
+      padding: clamp(18px, 3vw, 34px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    #newYearPage .shell{
+      width:min(1100px, 96vw);
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: clamp(16px, 2.6vw, 28px);
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      #newYearPage .shell{grid-template-columns:1fr}
+    }
+
+    #newYearPage .card{
+      background: linear-gradient(180deg, var(--glass), rgba(255,255,255,.04));
+      border:1px solid var(--stroke);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+
+    #newYearPage .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(800px 300px at 20% 0%, rgba(102,240,255,.18), transparent 60%),
+                  radial-gradient(600px 250px at 90% 10%, rgba(255,79,216,.16), transparent 60%);
+      pointer-events:none;
+      opacity:.9;
+    }
+
+    #newYearPage .hero{
+      padding: clamp(18px, 2.4vw, 30px);
+      display:flex;
+      flex-direction:column;
+      gap: 16px;
+    }
+
+    #newYearPage .badge{
+      width:max-content;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.18);
+      box-shadow: 0 12px 30px rgba(0,0,0,.28);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    #newYearPage .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: radial-gradient(circle, var(--accent2), transparent 60%);
+      box-shadow: 0 0 20px rgba(102,240,255,.7);
+      position:relative;
+    }
+    #newYearPage .dot::after{
+      content:"";
+      position:absolute; inset:-4px;
+      border-radius:50%;
+      border:1px solid rgba(102,240,255,.4);
+      animation:nyPulse 1.6s ease-in-out infinite;
+    }
+    @keyframes nyPulse{
+      0%,100%{transform:scale(1); opacity:.55}
+      50%{transform:scale(1.55); opacity:.08}
+    }
+
+    #newYearPage h1{
+      margin:0;
+      font-size: clamp(34px, 4.1vw, 58px);
+      line-height:1.02;
+      letter-spacing:-.02em;
+      text-shadow: 0 0 25px rgba(255,79,216,.22), 0 0 30px rgba(102,240,255,.18);
+    }
+
+    #newYearPage .shimmer{
+      display:inline-block;
+      position:relative;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,.35),
+        rgba(255,255,255,.95),
+        rgba(255,255,255,.35)
+      );
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    #newYearPage .shimmer::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(120deg,
+        transparent 0%,
+        rgba(255,255,255,.35) 25%,
+        transparent 55%
+      );
+      transform: translateX(-140%);
+      animation: nySheen 2.6s ease-in-out infinite;
+      mix-blend-mode: overlay;
+    }
+    @keyframes nySheen{
+      0%{transform:translateX(-140%)}
+      55%{transform:translateX(140%)}
+      100%{transform:translateX(140%)}
+    }
+
+    #newYearPage .sub{
+      margin:0;
+      color: var(--muted);
+      font-size: clamp(14px, 1.6vw, 16px);
+      max-width: 62ch;
+    }
+
+    #newYearPage .countdown{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 6px;
+    }
+    @media (max-width: 520px){
+      #newYearPage .countdown{grid-template-columns: repeat(2, 1fr)}
+    }
+
+    #newYearPage .tile{
+      position:relative;
+      padding: 14px 12px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.18);
+      overflow:hidden;
+      transform: translateZ(0);
+    }
+
+    #newYearPage .tile::before{
+      content:"";
+      position:absolute; inset:-80px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,79,216,.22), transparent 45%),
+                  radial-gradient(circle at 70% 70%, rgba(102,240,255,.18), transparent 45%);
+      opacity:.9;
+      animation: nyDrift 6s ease-in-out infinite;
+    }
+    @keyframes nyDrift{
+      0%,100%{transform:translate(0,0)}
+      50%{transform:translate(18px,-12px)}
+    }
+
+    #newYearPage .tile > *{position:relative; z-index:1}
+    #newYearPage .num{
+      font-size: clamp(28px, 3.1vw, 40px);
+      font-weight: 800;
+      letter-spacing:-.02em;
+    }
+    #newYearPage .label{
+      margin-top: 2px;
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.72);
+    }
+
+    #newYearPage .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 8px;
+      align-items:center;
+    }
+
+    #newYearPage .btn{
+      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight: 600;
+      letter-spacing:.01em;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      -webkit-user-select: none;
+      user-select:none;
+    }
+    #newYearPage .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.28)}
+    #newYearPage .btn:active{transform: translateY(0px) scale(.98)}
+
+    #newYearPage .hint{
+      color: rgba(255,255,255,.7);
+      font-size: 13px;
+    }
+
+    #newYearPage .side{ display:flex; flex-direction:column; }
+
+    #newYearPage .butterflyWrap{
+      padding: 18px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      position:relative;
+      overflow:hidden;
+    }
+    #newYearPage .butterflyWrap::after{
+      content:"";
+      position:absolute; inset:-60px;
+      background: radial-gradient(circle at 20% 10%, rgba(255,209,102,.16), transparent 55%),
+                  radial-gradient(circle at 80% 20%, rgba(255,79,216,.14), transparent 55%);
+      transform: rotate(10deg);
+      opacity:.85;
+      pointer-events:none;
+    }
+
+    #newYearPage .butterfly{
+      position:relative;
+      height: 320px;
+      display:grid;
+      place-items:center;
+      isolation:isolate;
+    }
+
+    #newYearPage .wing{
+      position:absolute;
+      width: 42%;
+      height: 42%;
+      border-radius: 22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.20);
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+      transform-origin: center;
+      background: rgba(0,0,0,.12);
+      animation: nyFlap 3.2s ease-in-out infinite;
+    }
+    #newYearPage .wing img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter: saturate(1.08) contrast(1.05);
+      transform: scale(1.04);
+      transition: transform .6s ease, filter .6s ease;
+    }
+    #newYearPage .wing:hover img{
+      transform: scale(1.12);
+      filter: saturate(1.22) contrast(1.12);
+    }
+
+    #newYearPage .w1{ left:6%;  top:10%;  clip-path: polygon(10% 10%, 100% 0, 90% 100%, 0 85%); }
+    #newYearPage .w2{ right:6%; top:10%;  clip-path: polygon(0 0, 90% 10%, 100% 85%, 10% 100%); animation-delay: .12s; }
+    #newYearPage .w3{ left:6%;  bottom:10%; clip-path: polygon(0 15%, 90% 0, 100% 100%, 10% 90%); animation-delay: .18s; }
+    #newYearPage .w4{ right:6%; bottom:10%; clip-path: polygon(10% 0, 100% 15%, 90% 90%, 0 100%); animation-delay: .28s; }
+
+    #newYearPage .butterBody{
+      width: 18px;
+      height: 180px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.14));
+      box-shadow: 0 0 28px rgba(102,240,255,.18);
+      position:relative;
+      z-index:2;
+      opacity:.9;
+    }
+    #newYearPage .butterBody::before, #newYearPage .butterBody::after{
+      content:"";
+      position:absolute;
+      top:-22px;
+      width: 2px;
+      height: 42px;
+      background: rgba(255,255,255,.65);
+      border-radius:999px;
+    }
+    #newYearPage .butterBody::before{ left: 3px; transform: rotate(-18deg); }
+    #newYearPage .butterBody::after{ right: 3px; transform: rotate(18deg); }
+
+    @keyframes nyFlap{
+      0%,100%{transform: perspective(900px) rotateY(0deg) rotateX(0deg) translateZ(0) }
+      50%{transform: perspective(900px) rotateY(var(--ry, 7deg)) rotateX(var(--rx, -4deg)) translateZ(2px)}
+    }
+
+    #newYearPage .textWrap{
+      padding: 18px 18px 22px;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      position:relative;
+    }
+
+    #newYearPage .title2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing:.01em;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    #newYearPage .spark{
+      width:10px; height:10px;
+      background: radial-gradient(circle, var(--accent1), transparent 60%);
+      border-radius:50%;
+      box-shadow: 0 0 24px rgba(255,79,216,.65);
+    }
+
+    #newYearPage .para{
+      margin:0;
+      color: rgba(255,255,255,.80);
+      line-height:1.7;
+      font-size: 14.5px;
+    }
+
+    #newYearPage .quote{
+      margin-top: 8px;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.14);
+      color: rgba(255,255,255,.82);
+      font-size: 13px;
+      line-height:1.5;
+      position:relative;
+      overflow:hidden;
+    }
+    #newYearPage .quote::before{
+      content:"";
+      position:absolute; inset:-60px;
+      background: radial-gradient(circle at 30% 30%, rgba(102,240,255,.16), transparent 50%),
+                  radial-gradient(circle at 70% 60%, rgba(255,209,102,.12), transparent 55%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    #newYearPage .quote span{position:relative; z-index:1}
+
+    #newYearPage .toast{
+      position:fixed;
+      left:50%;
+      bottom:22px;
+      transform: translateX(-50%) translateY(20px);
+      padding: 12px 14px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.2);
+      background: rgba(0,0,0,.28);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+      opacity:0;
+      pointer-events:none;
+      z-index:5;
+      transition: opacity .35s ease, transform .35s ease;
+      max-width:min(520px, 92vw);
+      text-align:center;
+      font-weight: 650;
+      letter-spacing:.01em;
+    }
+    #newYearPage .toast.show{opacity:1; transform: translateX(-50%) translateY(0)}
+
+    #newYearPage .foot{
+      margin-top: 8px;
+      color: rgba(255,255,255,.58);
+      font-size: 12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      #newYearPage .wash, #newYearPage .wing, #newYearPage .tile::before,
+      #newYearPage .dot::after, #newYearPage .shimmer::after { animation:none !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ========================= HOVER PAGE ========================= -->
+  <section id="hoverPage">
+    <div class="wash" aria-hidden="true"></div>
+    <div class="sparks" aria-hidden="true" id="hoverSparks"></div>
+
+    <div class="card" id="hoverCard">
+      <div class="blob" aria-hidden="true"></div>
+
+      <div class="content">
+        <div class="badge"><span class="dot"></span></div>
+        <h2>Hello</h2>
+        <h3>For Thwe Thwe</h3>
+        <p>I have to show you something. Click the button below there’s a surprise waiting ✨</p>
+
+        <!-- FIXED: button (no href / no navigation) -->
+        <button class="btn" id="continueBtn" type="button">
+          Continue <span class="arrow">➜</span>
+        </button>
+      </div>
+
+      <div class="imagePane">
+        <div class="imageFrame">
+          <img src="./image/img3.jpg" alt="Photo">
+        </div>
+      </div>
+    </div>
+
+    <div class="transition" id="hoverTransition">
+      <div class="veil"></div>
+      <div class="portal"></div>
+    </div>
+  </section>
+
+  <!-- ========================= NEW YEAR PAGE ========================= -->
+  <section id="newYearPage">
+    <div class="wash" aria-hidden="true"></div>
+    <canvas id="fx"></canvas>
+
+    <div class="page">
+      <div class="shell">
+        <section class="card hero" id="nyHero">
+          <div class="badge">
+            <span class="dot"></span>
+            <span id="statusText">Counting down to the New Year…</span>
+          </div>
+
+          <h1>
+            <span class="shimmer" id="headline">Happy New Year Thwe Thwe</span> ✨
+          </h1>
+
+          <p class="sub" id="subtext">
+            Tdy is the last day of the year. May your new year be filled with joy, success, and all the things that make you smile.
+          </p>
+
+          <div class="countdown" aria-label="countdown">
+            <div class="tile">
+              <div class="num" id="d">00</div>
+              <div class="label">Days</div>
+            </div>
+            <div class="tile">
+              <div class="num" id="h">00</div>
+              <div class="label">Hours</div>
+            </div>
+            <div class="tile">
+              <div class="num" id="m">00</div>
+              <div class="label">Minutes</div>
+            </div>
+            <div class="tile">
+              <div class="num" id="s">00</div>
+              <div class="label">Seconds</div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn" id="burstBtn">🎆 Firework Burst</button>
+            <button class="btn" id="toggleFxBtn">🪄 Toggle Fireworks</button>
+            <span class="hint">Tip: click/tap anywhere for fireworks.</span>
+          </div>
+
+          <div class="foot">
+            <span id="targetText">Target: Jan 1, next year (local time)</span>
+            <span>•</span>
+            <span id="timeText">—</span>
+          </div>
+        </section>
+
+        <aside class="card side" id="side">
+          <div class="butterflyWrap">
+            <div class="butterfly" id="butterfly">
+              <div class="wing w1"><img alt="Photo 1" src="./image/img1.jpg"></div>
+              <div class="wing w2"><img alt="Photo 2" src="./image/img4.jpg"></div>
+              <div class="wing w3"><img alt="Photo 3" src="./image/img2.jpg"></div>
+              <div class="wing w4"><img alt="Photo 4" src="./image/img5.jpg"></div>
+              <div class="butterBody" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <div class="textWrap">
+            <h2 class="title2"><span class="spark"></span> A New Year Wish</h2>
+            <p class="para">
+              May your days feel lighter, your plans feel possible, and your hard work finally meet its reward.
+              Keep the people you love close, keep your curiosity even closer, and don’t forget that small steps become
+              stunning journeys. This year, choose growth, choose peace, choose you. And Happy New Year!!!!
+            </p>
+
+            <div class="quote">
+              <span>
+                “Tonight be happy with your loving families i means just drunkkk and be happy your to start a new year with a fresh start.”
+              </span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">🎉 Happy New Year Thwe Thwe! 🎉</div>
+  </section>
+
+  <script>
+    /* ===============================
+       HOVER PAGE JS (unchanged behavior)
+    =============================== */
+    (function(){
+      const sparks = document.getElementById("hoverSparks");
+      const sparkCount = 18;
+      for (let i = 0; i < sparkCount; i++){
+        const s = document.createElement("div");
+        s.className = "spark";
+        s.style.left = (Math.random() * 100) + "vw";
+        s.style.animationDuration = (8 + Math.random() * 9) + "s";
+        s.style.animationDelay = (-Math.random() * 12) + "s";
+        s.style.opacity = (0.25 + Math.random() * 0.45).toFixed(2);
+        s.style.transform = "translateY(" + (50 + Math.random()*60) + "vh)";
+        sparks.appendChild(s);
+      }
+
+      const card = document.getElementById("hoverCard");
+      let mx = 0, my = 0;
+      function lerp(a,b,t){ return a + (b-a)*t; }
+      let tx = 0, ty = 0;
+
+      window.addEventListener("mousemove", (e)=>{
+        mx = (e.clientX / window.innerWidth) * 2 - 1;
+        my = (e.clientY / window.innerHeight) * 2 - 1;
+      }, { passive:true });
+
+      function tiltLoop(){
+        tx = lerp(tx, my * -6, 0.06);
+        ty = lerp(ty, mx *  8, 0.06);
+        card.style.transform = "perspective(1100px) rotateX(" + tx + "deg) rotateY(" + ty + "deg)";
+        requestAnimationFrame(tiltLoop);
+      }
+      tiltLoop();
+
+      const btn = document.getElementById("continueBtn");
+      const transition = document.getElementById("hoverTransition");
+
+      function spawnTransitionSparks(x, y){
+        const count = 28;
+        for (let i=0; i<count; i++){
+          const p = document.createElement("div");
+          p.className = "tSpark";
+          p.style.left = x + "px";
+          p.style.top = y + "px";
+          transition.appendChild(p);
+
+          const ang = Math.random() * Math.PI * 2;
+          const dist = 60 + Math.random() * 220;
+          const dx = Math.cos(ang) * dist;
+          const dy = Math.sin(ang) * dist;
+
+          p.animate([
+            { transform: "translate(0,0) scale(1)", opacity: 0.95 },
+            { transform: "translate(" + dx + "px, " + dy + "px) scale(0.2)", opacity: 0 }
+          ], {
+            duration: 520 + Math.random() * 420,
+            easing: "cubic-bezier(.2,.9,.2,1)",
+            fill: "forwards"
+          });
+
+          setTimeout(()=> p.remove(), 1100);
+        }
+      }
+
+      btn.addEventListener("click", ()=>{
+        const r = btn.getBoundingClientRect();
+        const x = r.left + r.width/2;
+        const y = r.top + r.height/2;
+
+        transition.classList.add("show");
+        spawnTransitionSparks(x, y);
+
+        card.animate([
+          { transform: card.style.transform || "none", filter:"brightness(1)", opacity: 1 },
+          { transform: "perspective(1100px) rotateX(0deg) rotateY(0deg) scale(.985)", filter:"brightness(1.08)", opacity: 1 },
+          { transform: "perspective(1100px) rotateX(0deg) rotateY(0deg) scale(.92)", filter:"brightness(1.15)", opacity: .55 }
+        ], {
+          duration: 520,
+          easing: "cubic-bezier(.2,.9,.2,1)",
+          fill: "forwards"
+        });
+
+        setTimeout(()=> {
+          // switch pages (NO NAVIGATION)
+          document.getElementById("hoverPage").style.display = "none";
+          document.getElementById("newYearPage").style.display = "block";
+          // start New Year JS after reveal
+          if (window.__initNewYear) window.__initNewYear();
+        }, 720);
+      });
+    })();
+
+    /* ===============================
+       NEW YEAR JS (from index1.html)
+       - Wrapped so it starts only when page is shown
+    =============================== */
+    window.__initNewYear = (function(){
+      let started = false;
+      return function initNewYearOnce(){
+        if (started) return;
+        started = true;
+
+        const pad2 = n => String(n).padStart(2, "0");
+
+        const el = {
+          d: document.getElementById("d"),
+          h: document.getElementById("h"),
+          m: document.getElementById("m"),
+          s: document.getElementById("s"),
+          statusText: document.getElementById("statusText"),
+          timeText: document.getElementById("timeText"),
+          targetText: document.getElementById("targetText"),
+          toast: document.getElementById("toast"),
+          headline: document.getElementById("headline"),
+          hero: document.getElementById("nyHero"),
+          butterfly: document.getElementById("butterfly")
+        };
+
+        function nextNewYearDate() {
+          const now = new Date();
+          return new Date(now.getFullYear() + 1, 0, 1, 0, 0, 0, 0);
+        }
+
+        let target = nextNewYearDate();
+        el.targetText.textContent = "Target: " + target.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+        let celebrated = false;
+
+        function tickCountdown(){
+          const now = new Date();
+          el.timeText.textContent = "Local time: " + now.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "medium" });
+          let diff = target - now;
+
+          if (diff <= 0){
+            el.d.textContent = el.h.textContent = el.m.textContent = el.s.textContent = "00";
+            el.statusText.textContent = "It’s New Year time — celebrate!";
+            if (!celebrated){
+              celebrated = true;
+              newYearSequence();
+            }
+            return;
+          }
+
+          const sec = Math.floor(diff / 1000);
+          const days = Math.floor(sec / 86400);
+          const hours = Math.floor((sec % 86400) / 3600);
+          const mins = Math.floor((sec % 3600) / 60);
+          const secs = sec % 60;
+
+          el.d.textContent = pad2(days);
+          el.h.textContent = pad2(hours);
+          el.m.textContent = pad2(mins);
+          el.s.textContent = pad2(secs);
+
+          if (days === 0 && hours === 0 && mins < 1) el.statusText.textContent = "Almost there… hold your wish ✨";
+          else if (days === 0 && hours < 2) el.statusText.textContent = "The final hours…";
+          else el.statusText.textContent = "Counting down to the New Year…";
+        }
+
+        /* Fireworks engine (same as your file, optimized) */
+        const canvas = document.getElementById("fx");
+        const ctx = canvas.getContext("2d", { alpha: true });
+
+        const Quality = {
+          dprCap: 1.35,
+          maxRockets: 10,
+          maxParticles: 1400,
+          particlePerExplosion: 60,
+          ambientChance: 0.022,
+          trailAlpha: 0.18,
+          useGlow: false
+        };
+
+        let W = 0, H = 0, DPR = 1;
+        function resize(){
+          DPR = Math.min(Quality.dprCap, window.devicePixelRatio || 1);
+          canvas.width = Math.floor(window.innerWidth * DPR);
+          canvas.height = Math.floor(window.innerHeight * DPR);
+          canvas.style.width = window.innerWidth + "px";
+          canvas.style.height = window.innerHeight + "px";
+          ctx.setTransform(DPR,0,0,DPR,0,0);
+          W = window.innerWidth;
+          H = window.innerHeight;
+        }
+        window.addEventListener("resize", resize);
+        resize();
+
+        const rand = (a,b)=> a + Math.random()*(b-a);
+        const clamp = (v,a,b)=> Math.max(a, Math.min(b, v));
+
+        const particles = [];
+        const rockets = [];
+
+        let fxEnabled = true;
+        let ambient = true;
+
+        function colorPick(){
+          const palette = [
+            [255,79,216],
+            [102,240,255],
+            [255,209,102],
+            [180,255,140],
+            [160,160,255]
+          ];
+          return palette[(Math.random()*palette.length)|0];
+        }
+
+        function spawnRocket(x){
+          if (!fxEnabled) return;
+          if (rockets.length >= Quality.maxRockets) return;
+          const c = colorPick();
+          rockets.push({
+            x, y: H + 10,
+            vx: rand(-0.6,0.6),
+            vy: rand(-7.6,-10.4),
+            ay: 0.12,
+            life: 0,
+            explodeAt: rand(0.55, 0.85),
+            rgb: {r:c[0], g:c[1], b:c[2]},
+            size: 2.4
+          });
+        }
+
+        function explode(x, y, rgb, power=1){
+          const count = Math.floor(Quality.particlePerExplosion * power);
+          if (particles.length + count > Quality.maxParticles) return;
+
+          for (let i=0;i<count;i++){
+            const ang = Math.random() * Math.PI * 2;
+            const spd = rand(1.2, 4.8) * power;
+            particles.push({
+              x, y,
+              vx: Math.cos(ang) * spd,
+              vy: Math.sin(ang) * spd,
+              drag: rand(0.985, 0.992),
+              grav: rand(0.04, 0.085),
+              life: 0,
+              ttl: rand(0.85, 1.45),
+              r: rgb.r, g: rgb.g, b: rgb.b,
+              size: rand(1.0, 2.0) * power
+            });
+          }
+        }
+
+        let lastFpsTime = performance.now();
+        let frames = 0;
+        let fps = 60;
+
+        function autoTune(){
+          frames++;
+          const now = performance.now();
+          if (now - lastFpsTime >= 700){
+            fps = Math.round((frames * 1000) / (now - lastFpsTime));
+            frames = 0;
+            lastFpsTime = now;
+
+            if (fps < 45){
+              Quality.ambientChance = 0.012;
+              Quality.particlePerExplosion = 44;
+              Quality.maxParticles = 1000;
+              Quality.trailAlpha = 0.24;
+            } else if (fps < 55){
+              Quality.ambientChance = 0.016;
+              Quality.particlePerExplosion = 52;
+              Quality.maxParticles = 1200;
+              Quality.trailAlpha = 0.21;
+            } else {
+              Quality.ambientChance = 0.022;
+              Quality.particlePerExplosion = 60;
+              Quality.maxParticles = 1400;
+              Quality.trailAlpha = 0.18;
+            }
+          }
+        }
+
+        ctx.fillStyle = "rgba(2,2,8,1)";
+        ctx.fillRect(0,0,W,H);
+
+        let lastT = performance.now();
+        function step(t){
+          requestAnimationFrame(step);
+          autoTune();
+
+          const dt = Math.min(0.033, (t - lastT) / 1000);
+          lastT = t;
+
+          ctx.fillStyle = "rgba(2, 2, 8, " + Quality.trailAlpha + ")";
+          ctx.fillRect(0,0,W,H);
+
+          if (fxEnabled && ambient && Math.random() < Quality.ambientChance){
+            spawnRocket(rand(80, W-80));
+          }
+
+          for (let i=rockets.length-1;i>=0;i--){
+            const r = rockets[i];
+            r.life += dt;
+
+            r.vy += r.ay;
+            r.x += r.vx * (dt * 60);
+            r.y += r.vy * (dt * 60);
+
+            ctx.globalCompositeOperation = "lighter";
+            ctx.fillStyle = "rgba(" + r.rgb.r + "," + r.rgb.g + "," + r.rgb.b + ",0.95)";
+            ctx.beginPath();
+            ctx.arc(r.x, r.y, r.size, 0, Math.PI*2);
+            ctx.fill();
+
+            if (r.life >= r.explodeAt || r.vy > -1.1){
+              explode(r.x, r.y, r.rgb, 1);
+              rockets.splice(i,1);
+            }
+          }
+
+          ctx.globalCompositeOperation = "lighter";
+          for (let i=particles.length-1;i>=0;i--){
+            const p = particles[i];
+            p.life += dt;
+
+            p.vx *= p.drag;
+            p.vy = p.vy * p.drag + p.grav;
+            p.x += p.vx * (dt * 60);
+            p.y += p.vy * (dt * 60);
+
+            const alpha = clamp(1 - (p.life / p.ttl), 0, 1);
+            if (alpha <= 0 || p.y > H + 40){
+              particles.splice(i,1);
+              continue;
+            }
+
+            ctx.fillStyle = "rgba(" + p.r + "," + p.g + "," + p.b + "," + alpha + ")";
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+            ctx.fill();
+          }
+
+          ctx.globalCompositeOperation = "source-over";
+        }
+        requestAnimationFrame(step);
+
+        function pointerFire(e){
+          if (!fxEnabled) return;
+          const x = (e.touches ? e.touches[0].clientX : e.clientX);
+          spawnRocket(x);
+          if (Math.random() < 0.35){
+            explode(x, rand(H*0.25, H*0.65), {r:255,g:209,b:102}, 0.95);
+          }
+        }
+        window.addEventListener("click", pointerFire, { passive:true });
+        window.addEventListener("touchstart", pointerFire, { passive:true });
+
+        document.getElementById("burstBtn").addEventListener("click", ()=>{
+          if (!fxEnabled) return;
+          const burstCount = 5;
+          for (let i=0;i<burstCount;i++){
+            setTimeout(()=> spawnRocket(rand(120, W-120)), i*90);
+          }
+        });
+
+        document.getElementById("toggleFxBtn").addEventListener("click", ()=>{
+          fxEnabled = !fxEnabled;
+          ambient = fxEnabled;
+          document.getElementById("toggleFxBtn").textContent = fxEnabled ? "🪄 Toggle Fireworks" : "🪄 Fireworks Off";
+          if (!fxEnabled){
+            rockets.length = 0;
+            particles.length = 0;
+            ctx.fillStyle = "rgba(2,2,8,1)";
+            ctx.fillRect(0,0,W,H);
+          }
+        });
+
+        function showToast(msg){
+          el.toast.textContent = msg;
+          el.toast.classList.add("show");
+          setTimeout(()=> el.toast.classList.remove("show"), 4500);
+        }
+
+        function confettiBurst(count=120){
+          const wrap = document.createElement("div");
+          wrap.style.position="fixed";
+          wrap.style.inset="0";
+          wrap.style.zIndex="4";
+          wrap.style.pointerEvents="none";
+          document.body.appendChild(wrap);
+
+          for (let i=0;i<count;i++){
+            const p = document.createElement("div");
+            const size = rand(6, 12);
+            p.style.position="absolute";
+            p.style.left = rand(10, 90) + "vw";
+            p.style.top = "-10vh";
+            p.style.width = size + "px";
+            p.style.height = rand(10, 18) + "px";
+            p.style.borderRadius = rand(2, 8) + "px";
+
+            const c = colorPick();
+            p.style.background = "rgba(" + c[0] + "," + c[1] + "," + c[2] + ",.9)";
+
+            const fall = rand(1200, 2200);
+            const drift = rand(-120, 120);
+            const rot = rand(-240, 240);
+
+            p.animate([
+              { transform:"translate(0,0) rotate(0deg)", opacity: 1 },
+              { transform:"translate(" + drift + "px, 120vh) rotate(" + rot + "deg)", opacity: 0.9 }
+            ], {
+              duration: fall,
+              easing: "cubic-bezier(.12,.62,.15,1)",
+              fill: "forwards"
+            });
+
+            wrap.appendChild(p);
+          }
+          setTimeout(()=> wrap.remove(), 2600);
+        }
+
+        function newYearSequence(){
+          el.headline.style.filter = "drop-shadow(0 0 18px rgba(255,79,216,.35)) drop-shadow(0 0 18px rgba(102,240,255,.28))";
+          showToast("🎉 Happy New Year! May your wishes come true ✨");
+
+          fxEnabled = true;
+          ambient = true;
+
+          let shots = 0;
+          const maxShots = 18;
+          const timer = setInterval(()=>{
+            if (!fxEnabled) { clearInterval(timer); return; }
+            spawnRocket(rand(90, W-90));
+            if (++shots >= maxShots) {
+              clearInterval(timer);
+              confettiBurst(130);
+            }
+          }, 140);
+        }
+
+        let mx = 0, my = 0;
+        window.addEventListener("mousemove", (e)=>{
+          mx = (e.clientX / window.innerWidth) * 2 - 1;
+          my = (e.clientY / window.innerHeight) * 2 - 1;
+        }, { passive:true });
+
+        function parallax(){
+          const rx = clamp(my * -7, -9, 9);
+          const ry = clamp(mx *  9, -10, 10);
+          document.documentElement.style.setProperty("--rx", rx + "deg");
+          document.documentElement.style.setProperty("--ry", ry + "deg");
+
+          const tiltX = clamp(my * 2.2, -2.2, 2.2);
+          const tiltY = clamp(mx * 3.2, -3.2, 3.2);
+          el.hero.style.transform = "perspective(1000px) rotateX(" + tiltX + "deg) rotateY(" + tiltY + "deg)";
+          el.butterfly.style.transform = "translateY(" + (Math.sin(Date.now()/700)*3) + "px) rotate(" + (mx*1.5) + "deg)";
+          requestAnimationFrame(parallax);
+        }
+        parallax();
+
+        tickCountdown();
+        setInterval(tickCountdown, 250);
+
+        if ((target - new Date()) <= 0 && !celebrated){
+          celebrated = true;
+          newYearSequence();
+        }
+      };
+    })();
+  </script>
+
+</body>
+</html>
